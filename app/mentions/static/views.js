@@ -16,7 +16,8 @@ App.MentionsResultListView = Backbone.View.extend({
 App.MentionsResultView = Backbone.View.extend({
     template: _.template($('#tpl-mentions-result-view').html()),
     events: {
-        'click li.refresh a': 'clickRefresh'
+        'click li.refresh a': 'clickRefresh',
+        'click li.about a': 'clickAbout'
     },
     initialize: function (options) {
         this.render();
@@ -28,8 +29,10 @@ App.MentionsResultView = Backbone.View.extend({
         this.$('.progress').html(
             _.template($('#tpl-progress').html())()
         ).show();
+        // wire up csv download
         var csvUrl = this.model.get('results').get('sentences').csvUrl();
         this.$('li.csv a').attr('href', csvUrl);
+        // setup callback to populate when sentences are fetched from server
         this.listenTo(this.model.get('results').get('sentences'), 'sync', function (sentences) {
             App.debug('App.MentionsResultView.collection: sync');
             this.$('.progress').hide();
@@ -51,5 +54,12 @@ App.MentionsResultView = Backbone.View.extend({
         evt.preventDefault();
         this.model.execute();
         this.render();
+    },
+    clickAbout: function (evt) {
+        evt.preventDefault();
+        this.aboutView = new App.AboutView({
+            template: '#tpl-about-mentions-view'
+        });
+        $('body').append(this.aboutView.el);
     }
 });
