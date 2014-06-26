@@ -35,7 +35,7 @@ App.MentionsResultView = Backbone.View.extend({
             this.$('.progress').hide();
             // figure out the total sentence count
             totalSentences = sentences.last(1)[0].get('totalSentences');
-            this.$('.count').html('(' + totalSentences + ' found)');
+            this.$('.count').html(totalSentences);
             this.$('.query-name').html(this.model.get('name'));
             this.$('mentions-result-view-content').html('');
             // now list some of the sentences
