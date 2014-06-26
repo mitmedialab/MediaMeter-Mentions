@@ -1,0 +1,9 @@
+<script id="tpl-mentions-sentence-view" type="text/template">
+<div class="mentions-sentence-view">
+    <p>
+    <b><a href="<%=sentence.get('url')%>"><%= sentence.media() %> - <%= sentence.date() %></a></b>:
+    <br />
+    <%=sentence.escape('sentence')%>
+    </p>
+</div>
+</script>

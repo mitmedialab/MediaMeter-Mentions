@@ -15,6 +15,7 @@ App.MentionsResultListView = Backbone.View.extend({
 
 App.MentionsResultView = Backbone.View.extend({
     template: _.template($('#tpl-mentions-result-view').html()),
+    sentenceTemplate: _.template($('#tpl-mentions-sentence-view').html()),
     events: {
         'click li.refresh a': 'clickRefresh',
         'click li.about a': 'clickAbout'
@@ -43,10 +44,7 @@ App.MentionsResultView = Backbone.View.extend({
             this.$('mentions-result-view-content').html('');
             // now list some of the sentences
             _.each(sentences.last(10), function (m) {
-                var p = $('<p>').html('<em>' + m.media() + '</em> - ' + m.date() + ': ' 
-                    + '<a href="' + m.get('url') + '">' + m.escape('sentence') + '</a>'
-                    );
-                this.$('.mentions-result-view-content').append(p);
+                this.$('.mentions-result-view-content').append( this.sentenceTemplate({'sentence':m}) );
             }, this);
         });
     },
