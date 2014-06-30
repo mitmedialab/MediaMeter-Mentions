@@ -41,6 +41,14 @@ App.MentionsResultView = Backbone.View.extend({
             totalSentences = sentences.last(1)[0].get('totalSentences');
             this.$('.count').html(totalSentences);
             this.$('.query-name').html(this.model.get('name'));
+            // and update the header style
+            this.$('.query-name').removeClass('second-query').removeClass('first-query');
+
+            if(this.model.get('name')==App.config.queryNames[0]){
+                this.$('.query-name').addClass('first-query');
+            } else {
+                this.$('.query-name').addClass('second-query');
+            }
             this.$('mentions-result-view-content').html('');
             // now list some of the sentences
             _.each(sentences.last(10), function (m) {
