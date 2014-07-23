@@ -27,6 +27,7 @@ App.MentionsResultView = Backbone.View.extend({
     render: function () {
         App.debug('MenionResultView.render()');
         this.$el.html(this.template());
+        this.hideActionMenu();
         this.$('.progress').html(
             _.template($('#tpl-progress').html())()
         ).show();
@@ -54,6 +55,8 @@ App.MentionsResultView = Backbone.View.extend({
             _.each(sentences.last(10), function (m) {
                 this.$('.mentions-result-view-content').append( this.sentenceTemplate({'sentence':m}) );
             }, this);
+            this.delegateEvents();  // gotta run this to register the events again
+            this.showActionMenu();
         });
     },
     clickRefresh: function (evt) {
@@ -69,3 +72,4 @@ App.MentionsResultView = Backbone.View.extend({
         $('body').append(this.aboutView.el);
     }
 });
+App.MentionsResultView = App.MentionsResultView.extend(App.ActionedViewMixin);
